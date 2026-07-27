@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="flex justify-between align-center mb-4">
+    <a href="{% url 'dashboard' %}" class="btn btn-outline">← Back to Dashboard</a>
+    <div>
+        <a href="{% url 'edit_location' location.pk %}" class="btn btn-outline">Edit Nickname</a>
+        <a href="{% url 'delete_location' location.pk %}" class="btn btn-danger">Delete</a>
+    </div>
+</div>
+
+<div class="card mb-4" style="text-align: center;">
+    <h2>{{ location.custom_nickname|default:location.city_name }}</h2>
+    {% if location.custom_nickname %}
+        <p class="text-muted">{{ location.city_name }}</p>
+    {% endif %}
+
+    {% if current_weather %}
+        <div class="flex justify-between" style="max-width: 800px; margin: 2rem auto 0; text-align: left;">
+            <div style="flex: 1;">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <img class="weather-icon" style="width: 100px; height: 100px;" src="http://openweathermap.org/img/wn/{{ current_weather.weather.0.icon }}@4x.png" alt="Weather icon">
+                    <div>
+                        <div class="weather-temp" style="font-size: 4rem;">{{ current_weather.main.temp|floatformat:1 }}°C</div>
+                        <div class="weather-desc" style="font-size: 1.5rem;">{{ current_weather.weather.0.description }}</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; padding-left: 2rem; border-left: 1px solid var(--glass-border);">
+                <div class="weather-detail-item" style="align-items: flex-start;">
+                    <span class="weather-detail-label">Feels Like</span>
+                    <span class="weather-detail-value">{{ current_weather.main.feels_like|floatformat:1 }}°C</span>
+                </div>
+                <div class="weather-detail-item" style="align-items: flex-start;">
+                    <span class="weather-detail-label">Humidity</span>
+                    <span class="weather-detail-value">{{ current_weather.main.humidity }}%</span>
+                </div>
+                <div class="weather-detail-item" style="align-items: flex-start;">
+                    <span class="weather-detail-label">Wind Speed</span>
+                    <span class="weather-detail-value">{{ current_weather.wind.speed }} m/s</span>
+                </div>
+                <div class="weather-detail-item" style="align-items: flex-start;">
+                    <span class="weather-detail-label">Pressure</span>
+                    <span class="weather-detail-value">{{ current_weather.main.pressure }} hPa</span>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+{% if forecast %}
+<div class="card">
+    <h3>5-Day Forecast</h3>
+    <div class="forecast-list">
+        {% for item in forecast.list %}
+            {% if forloop.counter0|divisibleby:8 %}
+                <div class="forecast-item">
+                    <div class="forecast-day">{{ item.dt_txt|slice:":10" }}</div>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <img src="http://openweathermap.org/img/wn/{{ item.weather.0.icon }}.png" alt="icon">
+                        <span style="text-transform: capitalize; color: var(--text-muted); width: 150px;">{{ item.weather.0.description }}</span>
+                    </div>
+                    <div class="forecast-temp">{{ item.main.temp|floatformat:1 }}°C</div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% endblock content %}

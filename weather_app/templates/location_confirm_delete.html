@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card" style="max-width: 600px; margin: 0 auto; text-align: center;">
+    <h2 style="color: var(--danger);">Confirm Deletion</h2>
+    <p class="mt-3 mb-4">Are you sure you want to remove <strong>{{ object.city_name }}</strong> from your dashboard?</p>
+    
+    <form method="post">
+        {% csrf_token %}
+        <div class="flex gap-2" style="justify-content: center;">
+            <button type="submit" class="btn btn-danger">Yes, Remove</button>
+            <a href="{% url 'dashboard' %}" class="btn btn-outline">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock content %}

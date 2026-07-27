@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="flex justify-between align-center mb-4">
+    <h2>My Weather Dashboard</h2>
+</div>
+
+{% if locations_data %}
+    <div class="dashboard-grid">
+        {% for item in locations_data %}
+            <div class="card">
+                <div class="flex justify-between align-center mb-2">
+                    <h3 style="margin-bottom: 0;">
+                        <a href="{% url 'city_detail' item.location.pk %}" style="color: var(--text-main);">
+                            {{ item.location.custom_nickname|default:item.location.city_name }}
+                        </a>
+                    </h3>
+                    <div>
+                        <a href="{% url 'edit_location' item.location.pk %}" class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.875rem;">Edit</a>
+                        <a href="{% url 'delete_location' item.location.pk %}" class="btn btn-danger" style="padding: 0.25rem 0.5rem; font-size: 0.875rem;">Delete</a>
+                    </div>
+                </div>
+                {% if item.location.custom_nickname %}
+                    <p class="text-muted" style="font-size: 0.875rem; margin-bottom: 1rem;">{{ item.location.city_name }}</p>
+                {% endif %}
+
+                {% if item.error %}
+                    <div class="alert alert-error" style="margin-top: 1rem; padding: 0.75rem;">
+                        Failed to fetch data: {{ item.error }}
+                    </div>
+                {% elif item.weather %}
+                    <div class="text-center mt-3">
+                        <img class="weather-icon" src="http://openweathermap.org/img/wn/{{ item.weather.weather.0.icon }}@2x.png" alt="Weather icon">
+                        <div class="weather-temp">{{ item.weather.main.temp|floatformat:1 }}°C</div>
+                        <div class="weather-desc">{{ item.weather.weather.0.description }}</div>
+                    </div>
+                    
+                    <div class="weather-details">
+                        <div class="weather-detail-item">
+                            <span class="weather-detail-label">Humidity</span>
+                            <span class="weather-detail-value">{{ item.weather.main.humidity }}%</span>
+                        </div>
+                        <div class="weather-detail-item">
+                            <span class="weather-detail-label">Wind</span>
+                            <span class="weather-detail-value">{{ item.weather.wind.speed }} m/s</span>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="card text-center" style="padding: 4rem 2rem;">
+        <h3>No locations saved yet!</h3>
+        <p class="text-muted mb-4">Start building your dashboard by adding your favorite cities.</p>
+        <a href="{% url 'add_location' %}" class="btn btn-primary">Add a City</a>
+    </div>
+{% endif %}
+{% endblock content %}
