@@ -71,18 +71,16 @@
 </div>
 
 {% if forecast %}
-<div class="card">
+<div class="card mt-4">
     <h3>5-Day Forecast</h3>
     <div class="forecast-list">
         {% for item in forecast.list %}
             {% if forloop.counter0|divisibleby:8 %}
                 <div class="forecast-item">
                     <div class="forecast-day">{{ item.dt_txt|slice:":10" }}</div>
-                    <div style="display: flex; align-items: center; gap: 1rem;">
-                        <img src="http://openweathermap.org/img/wn/{{ item.weather.0.icon }}.png" alt="icon">
-                        <span style="text-transform: capitalize; color: var(--text-muted); width: 150px;">{{ item.weather.0.description }}</span>
-                    </div>
-                    <div class="forecast-temp">{{ item.main.temp|floatformat:1 }}°C</div>
+                    <img src="http://openweathermap.org/img/wn/{{ item.weather.0.icon }}@2x.png" alt="icon" style="width: 60px; height: 60px;">
+                    <div class="forecast-temp" style="font-size: 1.25rem;">{{ item.main.temp|floatformat:1 }}°C</div>
+                    <div style="text-transform: capitalize; color: var(--text-muted); font-size: 0.875rem; text-align: center;">{{ item.weather.0.description }}</div>
                 </div>
             {% endif %}
         {% endfor %}

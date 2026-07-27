@@ -248,28 +248,34 @@ a:hover {
 /* Forecast List */
 .forecast-list {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 1rem;
   margin-top: 2rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
 }
 
 .forecast-item {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  padding: 1rem;
+  padding: 1.5rem 1rem;
   background: rgba(15, 23, 42, 0.3);
   border-radius: 0.5rem;
   border: 1px solid rgba(255, 255, 255, 0.05);
+  min-width: 140px;
+  flex: 1;
 }
 
 .forecast-day {
   font-weight: 500;
-  width: 100px;
+  margin-bottom: 0.5rem;
 }
 
 .forecast-temp {
   font-weight: 600;
+  margin-top: 0.5rem;
 }
 
 /* Utility */
