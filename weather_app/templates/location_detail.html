@@ -72,6 +72,21 @@
 
 {% if forecast %}
 <div class="card mt-4">
+    <h3>Upcoming Weather (Next 24 Hours)</h3>
+    <div class="forecast-list">
+        {% for item in forecast.list|slice:":8" %}
+            <div class="forecast-item" style="min-width: 120px; padding: 1rem;">
+                <div class="forecast-day" style="font-size: 0.875rem; color: var(--text-muted);">{{ item.dt_txt|slice:":10" }}</div>
+                <div class="forecast-day" style="font-size: 1.1rem; margin-bottom: 0;">{{ item.dt_txt|slice:"11:16" }}</div>
+                <img src="http://openweathermap.org/img/wn/{{ item.weather.0.icon }}@2x.png" alt="icon" style="width: 50px; height: 50px;">
+                <div class="forecast-temp" style="font-size: 1.1rem; margin-top: 0;">{{ item.main.temp|floatformat:1 }}°C</div>
+                <div style="text-transform: capitalize; color: var(--text-muted); font-size: 0.8rem; text-align: center; margin-top: 0.25rem;">{{ item.weather.0.description }}</div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="card mt-4">
     <h3>5-Day Forecast</h3>
     <div class="forecast-list">
         {% for item in forecast.list %}
