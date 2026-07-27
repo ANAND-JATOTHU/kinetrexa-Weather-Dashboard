@@ -2,6 +2,18 @@
 
 A modern, full-stack Python Django Weather Dashboard featuring user authentication, saved favorite locations, real-time weather metrics, and 24-hour/5-day forecasts via OpenWeatherMap, all wrapped in a stunning glassmorphism UI.
 
+![Weather Dashboard Preview](docs/dashboard.png)
+
+## About The Project
+This project provides a personalized, fast, and visually appealing way for users to track weather across multiple cities simultaneously.
+* **Personalized Experience:** Users can register accounts and manage their own list of favorite cities.
+* **Real-Time Data:** Powered by the OpenWeatherMap API, the dashboard fetches live temperature, humidity, wind speed, and atmospheric conditions.
+* **Forecasting:** Users can dive into specific locations to view granular 3-hour interval updates for the next 24 hours, as well as a 5-day outlook.
+* **Robust Error Handling:** The backend Service layer intercepts API rate limits or invalid keys and handles them gracefully, ensuring the application never crashes.
+* **Premium UI:** Designed without external CSS frameworks, using purely custom Vanilla CSS with a modern dark-mode glassmorphism aesthetic.
+
+![Add Location Preview](docs/add_location.png)
+
 ## Demo Credentials
 To test the application quickly without registering, you can use the default test account:
 - **Username:** `admin`
