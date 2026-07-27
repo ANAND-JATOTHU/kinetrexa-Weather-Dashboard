@@ -198,17 +198,26 @@ a:hover {
 
 /* Dashboard Grid */
 .dashboard-grid {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   margin-top: 2rem;
-  overflow-x: auto;
-  padding-bottom: 1rem;
+}
+
+@media (max-width: 992px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .dashboard-grid .card {
-  min-width: 320px;
-  flex: 0 0 auto;
+  min-width: 0; /* Reset from earlier */
 }
 
 /* Weather Elements */
