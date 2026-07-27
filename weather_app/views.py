@@ -19,6 +19,14 @@ class RegisterView(View):
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password'])
             user.save()
+            
+            # Add India as a default location
+            FavoriteLocation.objects.create(
+                user=user,
+                city_name='India',
+                custom_nickname='Default Location'
+            )
+            
             login(request, user)
             messages.success(request, 'Registration successful. Welcome to the Weather Dashboard!')
             return redirect('dashboard')

@@ -25,7 +25,7 @@ class AddLocationForm(forms.ModelForm):
         model = FavoriteLocation
         fields = ['city_name', 'custom_nickname']
         widgets = {
-            'city_name': forms.TextInput(attrs={'placeholder': 'e.g., London, UK'}),
+            'city_name': forms.TextInput(attrs={'placeholder': 'e.g., Mumbai, India'}),
             'custom_nickname': forms.TextInput(attrs={'placeholder': 'e.g., Home (optional)'})
         }
 
