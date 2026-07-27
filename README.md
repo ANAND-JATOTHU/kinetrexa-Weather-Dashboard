@@ -1,6 +1,12 @@
 # Weather Dashboard
 
-A full-stack Python Django application featuring user authentication, database persistence, and external API integration to build a personalized weather dashboard.
+A modern, full-stack Python Django Weather Dashboard featuring user authentication, saved favorite locations, real-time weather metrics, and 24-hour/5-day forecasts via OpenWeatherMap, all wrapped in a stunning glassmorphism UI.
+
+## Demo Credentials
+To test the application quickly without registering, you can use the default test account:
+- **Username:** `admin`
+- **Password:** `admin`
+
 
 ## Key Features
 - **Object-Oriented Architecture**: Service layer separating external API logic from views.
