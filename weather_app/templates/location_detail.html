@@ -9,7 +9,7 @@
     </div>
 </div>
 
-<div class="card mb-4" style="text-align: center;">
+<div class="card mb-4 fade-in-up" style="text-align: center;">
     <h2>{{ location.custom_nickname|default:location.city_name }}</h2>
     {% if location.custom_nickname %}
         <p class="text-muted">{{ location.city_name }}</p>
@@ -71,7 +71,7 @@
 </div>
 
 {% if forecast %}
-<div class="card mt-4">
+<div class="card mt-4 fade-in-up delay-1">
     <h3>Upcoming Weather (Next 24 Hours)</h3>
     <div class="forecast-list">
         {% for item in forecast.list|slice:":8" %}
@@ -86,7 +86,7 @@
     </div>
 </div>
 
-<div class="card mt-4">
+<div class="card mt-4 fade-in-up delay-2">
     <h3>5-Day Forecast</h3>
     <div class="forecast-list">
         {% for item in forecast.list %}

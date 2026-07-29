@@ -8,7 +8,7 @@
 {% if locations_data %}
     <div class="dashboard-grid">
         {% for item in locations_data %}
-            <div class="card">
+            <div class="card fade-in-up {% if forloop.counter <= 4 %}delay-{{ forloop.counter }}{% endif %}">
                 <div class="flex justify-between align-center mb-2">
                     <h3 style="margin-bottom: 0;">
                         <a href="{% url 'city_detail' item.location.pk %}" style="color: var(--text-main);">
@@ -50,7 +50,7 @@
         {% endfor %}
     </div>
 {% else %}
-    <div class="card text-center" style="padding: 4rem 2rem;">
+    <div class="card text-center fade-in-up" style="padding: 4rem 2rem;">
         <h3>No locations saved yet!</h3>
         <p class="text-muted mb-4">Start building your dashboard by adding your favorite cities.</p>
         <a href="{% url 'add_location' %}" class="btn btn-primary">Add a City</a>

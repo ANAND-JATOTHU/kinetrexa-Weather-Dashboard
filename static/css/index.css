@@ -21,12 +21,20 @@
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background-color: var(--bg-dark);
+  background: linear-gradient(-45deg, #0F172A, #1E1B4B, #0F172A, #312E81);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
   color: var(--text-main);
   line-height: 1.6;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 /* Typography */
@@ -94,7 +102,8 @@ a:hover {
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+  box-shadow: 0 15px 45px 0 rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 /* Forms & Inputs */
@@ -335,4 +344,35 @@ a:hover {
 
 .weather-table tr:hover {
   background: rgba(255, 255, 255, 0.02);
+}
+
+/* Animations */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Footer */
+.footer {
+  margin-top: auto;
+  padding: 2rem;
+  text-align: center;
+  border-top: 1px solid var(--glass-border);
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(8px);
+  color: var(--text-muted);
+  font-size: 0.875rem;
 }
