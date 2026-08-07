@@ -1,35 +1,38 @@
-# Weather Dashboard
+# WeatherDash India 🇮🇳
 
-A modern, full-stack Python Django Weather Dashboard featuring user authentication, saved favorite locations, real-time weather metrics, and 24-hour/5-day forecasts via OpenWeatherMap, all wrapped in a stunning glassmorphism UI.
+A modern, full-stack Python Django Weather Dashboard tailored for Indian and global cities, powered by **100% Free Open-Meteo & National Air Quality Index (NAQI) APIs** (zero API keys required out-of-the-box!), featuring real-time meteorological metrics, 24-hour hourly projections, 7-day extended forecasts, and dynamic animated atmospheric elements wrapped in a stunning dark-mode glassmorphism UI.
 
 ![Weather Dashboard Preview](docs/dashboard.png)
 
 ## About The Project
-This project provides a personalized, fast, and visually appealing way for users to track weather across multiple cities simultaneously.
-* **Personalized Experience:** Users can register accounts and manage their own list of favorite cities.
-* **Real-Time Data:** Powered by the OpenWeatherMap API, the dashboard fetches live temperature, humidity, wind speed, and atmospheric conditions.
-* **Forecasting:** Users can dive into specific locations to view granular 3-hour interval updates for the next 24 hours, as well as a 5-day outlook.
-* **Robust Error Handling:** The backend Service layer intercepts API rate limits or invalid keys and handles them gracefully, ensuring the application never crashes.
-* **Premium UI:** Designed without external CSS frameworks, using purely custom Vanilla CSS with a modern dark-mode glassmorphism aesthetic.
+WeatherDash India provides a personalized, fast, and visually captivating experience for tracking live weather and air quality across major Indian hubs (such as Hyderabad, Mumbai, Delhi NCR, Bengaluru, Chennai, and Kolkata) as well as any city worldwide.
+
+### 🌟 Key Features
+* **100% Free API (Zero Setup / No API Key Needed)**: Powered by Open-Meteo with zero rate limit obstacles or key activation delays. Real live weather data works immediately upon running.
+* **Indian National Air Quality Index (NAQI)**: Real-time AQI categorization (Good, Satisfactory, Moderate, Poor, Very Poor, Severe) with granular PM2.5, PM10, Ozone, and CO pollutant metrics.
+* **Sun Cycle & Solar Arc Tracker**: Visual solar tracker displaying exact local sunrise and sunset timings.
+* **Hourly & Extended Forecasting**: Granular 24-hour hourly slider with precipitation chances and a full 7-day extended forecast.
+* **Interactive Unit Switcher**: Client-side instant toggle between Celsius (`°C`) and Fahrenheit (`°F`).
+* **Indian Weather Context & Advisories**: Automated contextual weather advisories for heatwaves, monsoon downpours, high air pollution, or clear skies.
+* **Quick-Add City Chips**: 1-click quick-fill badges for popular Indian metropolitan cities.
+* **Premium Glassmorphic UI & Animations**: Ambient weather particles, glowing hover cards with light-sheen reflections, live pulsating status radar dots (`🟢 Live`), and smooth cascading entry animations built with pure Vanilla CSS.
 
 ![Add Location Preview](docs/add_location.png)
 
 ## Demo Credentials
-To test the application quickly without registering, you can use the default test account:
+To test the application quickly without registering, use the default administrator account:
 - **Username:** `admin`
 - **Password:** `admin`
 
+---
 
-## Key Features
-- **Object-Oriented Architecture**: Service layer separating external API logic from views.
-- **Authentication & Authorization**: Built-in Django auth protecting personalized dashboards.
-- **CRUD Operations**: Add, view, edit (nicknames), and delete favorite locations.
-- **Exception Handling**: Graceful error handling for API failures (404, 429) using Django messages.
-- **Modern UI**: Custom Vanilla CSS with a glassmorphism design.
+## Technical Architecture
+- **Framework**: Django 5.2 (Python 3.10+)
+- **Service Layer Pattern**: Decoupled `WeatherService` with robust geocoding, WMO weather interpretation code mapping, and air quality classification.
+- **Fault-Tolerant Fallback**: Automatic graceful fallback ensures views never crash even during intermittent external network timeouts.
+- **Frontend / Styling**: Semantic HTML5 and pure Vanilla CSS (no bulky external CSS frameworks) with CSS custom properties, backdrop filters, and keyframe animations.
 
-## Prerequisites
-- Python 3.10+
-- OpenWeatherMap API Key (Free tier works perfectly)
+---
 
 ## Setup & Installation
 
@@ -53,41 +56,28 @@ To test the application quickly without registering, you can use the default tes
    pip install -r requirements.txt
    ```
 
-4. **Environment Variables**
-   Create a `.env` file in the root directory (where `manage.py` is located) and add your keys:
-   ```env
-   DJANGO_SECRET_KEY=your_secure_django_key
-   DEBUG=True
-   OPENWEATHERMAP_API_KEY=your_openweathermap_api_key_here
-   ```
-
-5. **Run Migrations**
+4. **Run Migrations**
    ```bash
    python manage.py makemigrations
    python manage.py migrate
    ```
 
-6. **Start the Development Server**
+5. **Start the Development Server**
    ```bash
    python manage.py runserver
    ```
-   Access the application at `http://127.0.0.1:8000`.
+   Access the dashboard at **`http://127.0.0.1:8000`**.
 
-## Generating the PDF Report
-The project includes a standalone script to auto-generate the architecture and database schema report.
+---
+
+## Generating the PDF Architecture Report
+The project includes a standalone script to generate an architectural and database schema PDF report:
 ```bash
 python generate_report.py
 ```
-This will output `Project_Report.pdf` in the root directory.
+This generates `Project_Report.pdf` in the root directory.
 
-## Testing
-To run the automated test suite (if implemented):
-```bash
-python manage.py test
-```
+---
 
-## Deployment
-For deploying to platforms like Render or PythonAnywhere, you will need to:
-1. Set `DEBUG=False` in `.env`.
-2. Add the appropriate domain to `ALLOWED_HOSTS` in `settings.py`.
-3. Configure static files using WhiteNoise or your web server's static file handler.
+## License
+Developed for Kinetrexa Internship Project.

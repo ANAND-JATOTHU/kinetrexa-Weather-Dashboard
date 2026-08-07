@@ -20,15 +20,21 @@ class RegisterView(View):
             user.set_password(form.cleaned_data['password'])
             user.save()
             
-            # Add India as a default location
-            FavoriteLocation.objects.create(
-                user=user,
-                city_name='India',
-                custom_nickname='Default Location'
-            )
+            # Add popular Indian default locations for immediate live dashboard experience
+            default_cities = [
+                ('Hyderabad, India', 'Hyderabad'),
+                ('Mumbai, India', 'Mumbai'),
+                ('New Delhi, India', 'New Delhi')
+            ]
+            for city_str, nick in default_cities:
+                FavoriteLocation.objects.create(
+                    user=user,
+                    city_name=city_str,
+                    custom_nickname=nick
+                )
             
             login(request, user)
-            messages.success(request, 'Registration successful. Welcome to the Weather Dashboard!')
+            messages.success(request, 'Registration successful. Welcome to India Weather Dashboard!')
             return redirect('dashboard')
         return render(request, 'auth/register.html', {'form': form})
 

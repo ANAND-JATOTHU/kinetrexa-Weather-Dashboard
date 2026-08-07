@@ -4,103 +4,182 @@
 <div class="flex justify-between align-center mb-4">
     <a href="{% url 'dashboard' %}" class="btn btn-outline">← Back to Dashboard</a>
     <div>
-        <a href="{% url 'edit_location' location.pk %}" class="btn btn-outline">Edit Nickname</a>
+        <a href="{% url 'edit_location' location.pk %}" class="btn btn-outline">Edit</a>
         <a href="{% url 'delete_location' location.pk %}" class="btn btn-danger">Delete</a>
     </div>
 </div>
 
-<div class="card mb-4 fade-in-up" style="text-align: center;">
-    <h2>{{ location.custom_nickname|default:location.city_name }}</h2>
-    {% if location.custom_nickname %}
-        <p class="text-muted">{{ location.city_name }}</p>
-    {% endif %}
+<!-- Weather Advisory Banner -->
+{% if current_weather.advisory %}
+    <div class="weather-advisory advisory-{{ current_weather.advisory_type }}">
+        <span style="font-size: 1.25rem;">
+            {% if current_weather.advisory_type == 'danger' %}⚠️{% elif current_weather.advisory_type == 'warning' %}🌧️{% else %}✨{% endif %}
+        </span>
+        <span>{{ current_weather.advisory }}</span>
+    </div>
+{% endif %}
 
+<!-- Primary Weather Hero Card -->
+<div class="card mb-4 fade-in-up" style="text-align: center;">
+    <div class="live-badge mb-2">
+        <span class="live-dot"></span> Real-Time Live Weather
+    </div>
+    <h2>{{ location.custom_nickname|default:location.city_name }}</h2>
+    <p class="text-muted" style="margin-top: -0.5rem; margin-bottom: 1.5rem;">
+        📍 {{ current_weather.name }}{% if current_weather.state %}, {{ current_weather.state }}{% endif %}, {{ current_weather.country }}
+    </p>
+    
     {% if current_weather %}
-        <div class="flex justify-between" style="max-width: 800px; margin: 2rem auto 0; text-align: left;">
-            <div style="flex: 1;">
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <img class="weather-icon" style="width: 100px; height: 100px;" src="http://openweathermap.org/img/wn/{{ current_weather.weather.0.icon }}@4x.png" alt="Weather icon">
-                    <div>
-                        <div class="weather-temp" style="font-size: 4rem;">{{ current_weather.main.temp|floatformat:1 }}°C</div>
-                        <div class="weather-desc" style="font-size: 1.5rem;">{{ current_weather.weather.0.description }}</div>
-                    </div>
-                </div>
+        <div class="weather-hero">
+            <div class="weather-icon-wrapper">
+                <img class="weather-icon" style="width: 96px; height: 96px;" src="http://openweathermap.org/img/wn/{{ current_weather.weather.0.icon }}@2x.png" alt="Weather icon">
+            </div>
+            <div class="weather-temp temp-display" data-c="{{ current_weather.main.temp|floatformat:1 }}" data-f="{{ current_weather.main.temp_f|floatformat:1 }}">
+                {{ current_weather.main.temp|floatformat:1 }}°C
+            </div>
+            <div class="weather-desc" style="font-size: 1.3rem;">{{ current_weather.weather.0.description }}</div>
+            <div class="text-muted mt-1" style="font-size: 0.95rem;">
+                Feels like <span class="temp-display" data-c="{{ current_weather.main.feels_like|floatformat:1 }}" data-f="{{ current_weather.main.feels_like_f|floatformat:1 }}">{{ current_weather.main.feels_like|floatformat:1 }}°C</span> 
+                • High: <span class="temp-display" data-c="{{ current_weather.main.temp_max|floatformat:1 }}" data-f="{{ current_weather.main.temp_max_f|floatformat:1 }}">{{ current_weather.main.temp_max|floatformat:1 }}°C</span> 
+                • Low: <span class="temp-display" data-c="{{ current_weather.main.temp_min|floatformat:1 }}" data-f="{{ current_weather.main.temp_min_f|floatformat:1 }}">{{ current_weather.main.temp_min|floatformat:1 }}°C</span>
             </div>
         </div>
-        
-        <div class="mt-4 pt-4" style="border-top: 1px solid var(--glass-border);">
-            <h3 class="mb-3 text-center">Detailed Metrics</h3>
-            <table class="weather-table">
-                <tbody>
-                    <tr>
-                        <th>Temperature</th>
-                        <td>{{ current_weather.main.temp|floatformat:1 }}°C</td>
-                    </tr>
-                    <tr>
-                        <th>Feels Like</th>
-                        <td>{{ current_weather.main.feels_like|floatformat:1 }}°C</td>
-                    </tr>
-                    <tr>
-                        <th>Min / Max Temp</th>
-                        <td>{{ current_weather.main.temp_min|floatformat:1 }}°C / {{ current_weather.main.temp_max|floatformat:1 }}°C</td>
-                    </tr>
-                    <tr>
-                        <th>Humidity</th>
-                        <td>{{ current_weather.main.humidity }}%</td>
-                    </tr>
-                    <tr>
-                        <th>Pressure</th>
-                        <td>{{ current_weather.main.pressure }} hPa</td>
-                    </tr>
-                    <tr>
-                        <th>Wind Speed</th>
-                        <td>{{ current_weather.wind.speed }} m/s</td>
-                    </tr>
-                    <tr>
-                        <th>Visibility</th>
-                        <td>{{ current_weather.visibility }} meters</td>
-                    </tr>
-                    <tr>
-                        <th>Cloudiness</th>
-                        <td>{{ current_weather.clouds.all }}%</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+
+        <!-- Sun Tracker Arc -->
+        {% if current_weather.sun %}
+            <div class="sun-tracker-card">
+                <h4 style="margin-bottom: 0.25rem; font-size: 1rem; color: var(--text-muted);">☀️ Sun Cycle (Local Time)</h4>
+                <div class="sun-arc">
+                    <div class="sun-icon-moving"></div>
+                </div>
+                <div class="sun-times">
+                    <span>🌅 Sunrise: {{ current_weather.sun.sunrise }}</span>
+                    <span>🌇 Sunset: {{ current_weather.sun.sunset }}</span>
+                </div>
+            </div>
+        {% endif %}
     {% endif %}
 </div>
 
-{% if forecast %}
-<div class="card mt-4 fade-in-up delay-1">
-    <h3>Upcoming Weather (Next 24 Hours)</h3>
-    <div class="forecast-list">
-        {% for item in forecast.list|slice:":8" %}
-            <div class="forecast-item" style="min-width: 120px; padding: 1rem;">
-                <div class="forecast-day" style="font-size: 0.875rem; color: var(--text-muted);">{{ item.dt_txt|slice:":10" }}</div>
-                <div class="forecast-day" style="font-size: 1.1rem; margin-bottom: 0;">{{ item.dt_txt|slice:"11:16" }}</div>
-                <img src="http://openweathermap.org/img/wn/{{ item.weather.0.icon }}@2x.png" alt="icon" style="width: 50px; height: 50px;">
-                <div class="forecast-temp" style="font-size: 1.1rem; margin-top: 0;">{{ item.main.temp|floatformat:1 }}°C</div>
-                <div style="text-transform: capitalize; color: var(--text-muted); font-size: 0.8rem; text-align: center; margin-top: 0.25rem;">{{ item.weather.0.description }}</div>
-            </div>
-        {% endfor %}
+<!-- Indian National Air Quality & UV Index Health Card -->
+{% if current_weather.aqi %}
+<div class="card mb-4 fade-in-up delay-1">
+    <div class="flex justify-between align-center mb-3">
+        <h3>🍃 Air Quality & Health (NAQI Scale)</h3>
+        <span class="tag-pill" style="background-color: {{ current_weather.aqi.color }}22; border: 1px solid {{ current_weather.aqi.color }}; color: {{ current_weather.aqi.color }}; font-size: 0.9rem;">
+            AQI {{ current_weather.aqi.value }} - {{ current_weather.aqi.status }}
+        </span>
+    </div>
+    <p class="text-muted mb-4">{{ current_weather.aqi.desc }}</p>
+
+    <div class="weather-details" style="border-top: none; padding-top: 0; grid-template-columns: repeat(4, 1fr);">
+        <div class="weather-detail-item">
+            <span class="weather-detail-label">PM2.5</span>
+            <span class="weather-detail-value">{{ current_weather.aqi.pm25 }} µg/m³</span>
+        </div>
+        <div class="weather-detail-item">
+            <span class="weather-detail-label">PM10</span>
+            <span class="weather-detail-value">{{ current_weather.aqi.pm10 }} µg/m³</span>
+        </div>
+        <div class="weather-detail-item">
+            <span class="weather-detail-label">UV Index</span>
+            <span class="weather-detail-value" style="color: {{ current_weather.uv.color }};">{{ current_weather.uv.value }} ({{ current_weather.uv.level }})</span>
+        </div>
+        <div class="weather-detail-item">
+            <span class="weather-detail-label">Ozone (O₃)</span>
+            <span class="weather-detail-value">{{ current_weather.aqi.o3 }} µg/m³</span>
+        </div>
     </div>
 </div>
+{% endif %}
 
+<!-- 24-Hour Hourly Forecast Slider -->
+{% if forecast.hourly %}
 <div class="card mt-4 fade-in-up delay-2">
-    <h3>5-Day Forecast</h3>
+    <h3>⏱️ 24-Hour Forecast</h3>
+    <p class="text-muted" style="font-size: 0.875rem;">Hourly temperature curves and precipitation chances.</p>
     <div class="forecast-list">
-        {% for item in forecast.list %}
-            {% if forloop.counter0|divisibleby:8 %}
-                <div class="forecast-item">
-                    <div class="forecast-day">{{ item.dt_txt|slice:":10" }}</div>
-                    <img src="http://openweathermap.org/img/wn/{{ item.weather.0.icon }}@2x.png" alt="icon" style="width: 60px; height: 60px;">
-                    <div class="forecast-temp" style="font-size: 1.25rem;">{{ item.main.temp|floatformat:1 }}°C</div>
-                    <div style="text-transform: capitalize; color: var(--text-muted); font-size: 0.875rem; text-align: center;">{{ item.weather.0.description }}</div>
+        {% for item in forecast.hourly %}
+            <div class="forecast-item">
+                <div class="forecast-day">{{ item.time }}</div>
+                <img src="http://openweathermap.org/img/wn/{{ item.weather.0.icon }}@2x.png" alt="icon" style="width: 48px; height: 48px;">
+                <div class="forecast-temp temp-display" data-c="{{ item.temp|floatformat:1 }}" data-f="{{ item.temp_f|floatformat:1 }}">
+                    {{ item.temp|floatformat:1 }}°C
                 </div>
-            {% endif %}
+                <div class="text-muted" style="font-size: 0.75rem; text-transform: capitalize;">{{ item.weather.0.description }}</div>
+                <div class="forecast-rain-prob">💧 {{ item.rain_prob }}%</div>
+            </div>
         {% endfor %}
     </div>
 </div>
 {% endif %}
+
+<!-- 7-Day Forecast Grid -->
+{% if forecast.daily %}
+<div class="card mt-4 fade-in-up delay-3">
+    <h3>📅 7-Day Extended Forecast</h3>
+    <div class="forecast-list">
+        {% for item in forecast.daily %}
+            <div class="forecast-item" style="min-width: 140px;">
+                <div class="forecast-day">{{ item.day_name }}</div>
+                <img src="http://openweathermap.org/img/wn/{{ item.weather.0.icon }}@2x.png" alt="icon" style="width: 52px; height: 52px;">
+                <div class="forecast-temp">
+                    <span class="temp-display" data-c="{{ item.temp_max|floatformat:0 }}" data-f="{{ item.temp_max_f|floatformat:0 }}">{{ item.temp_max|floatformat:0 }}°</span> / 
+                    <span class="text-muted temp-display" data-c="{{ item.temp_min|floatformat:0 }}" data-f="{{ item.temp_min_f|floatformat:0 }}">{{ item.temp_min|floatformat:0 }}°</span>
+                </div>
+                <div class="text-muted" style="font-size: 0.75rem; text-transform: capitalize; margin-top: 0.25rem;">
+                    {{ item.weather.0.description }}
+                </div>
+                <div class="forecast-rain-prob">💧 {{ item.rain_prob }}% Rain</div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<!-- Detailed Metrics Table -->
+<div class="card mt-4 fade-in-up delay-4">
+    <h3>📊 Detailed Meteorological Metrics</h3>
+    <table class="weather-table">
+        <tbody>
+            <tr>
+                <th>Current Temperature</th>
+                <td class="temp-display" data-c="{{ current_weather.main.temp|floatformat:1 }}" data-f="{{ current_weather.main.temp_f|floatformat:1 }}">
+                    {{ current_weather.main.temp|floatformat:1 }}°C
+                </td>
+            </tr>
+            <tr>
+                <th>Apparent Feels Like</th>
+                <td class="temp-display" data-c="{{ current_weather.main.feels_like|floatformat:1 }}" data-f="{{ current_weather.main.feels_like_f|floatformat:1 }}">
+                    {{ current_weather.main.feels_like|floatformat:1 }}°C
+                </td>
+            </tr>
+            <tr>
+                <th>Relative Humidity</th>
+                <td>{{ current_weather.main.humidity }}%</td>
+            </tr>
+            <tr>
+                <th>Wind Speed (Metric)</th>
+                <td>{{ current_weather.wind.speed_kmh }} km/h ({{ current_weather.wind.speed }} m/s)</td>
+            </tr>
+            <tr>
+                <th>Atmospheric Pressure</th>
+                <td>{{ current_weather.main.pressure }} hPa</td>
+            </tr>
+            <tr>
+                <th>Cloud Coverage</th>
+                <td>{{ current_weather.clouds.all }}%</td>
+            </tr>
+            <tr>
+                <th>UV Index</th>
+                <td>{{ current_weather.uv.value }} - {{ current_weather.uv.level }} ({{ current_weather.uv.advice }})</td>
+            </tr>
+            <tr>
+                <th>Geographical Coordinates</th>
+                <td>Lat: {{ current_weather.lat }}, Lon: {{ current_weather.lon }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 {% endblock content %}

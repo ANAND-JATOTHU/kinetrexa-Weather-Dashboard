@@ -1,9 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="card" style="max-width: 600px; margin: 0 auto;">
+<div class="card fade-in-up" style="max-width: 620px; margin: 0 auto;">
     <h2>{% if object %}Edit Location{% else %}Add Location{% endif %}</h2>
-    <form method="post" class="mt-4">
+    <p class="text-muted" style="font-size: 0.95rem;">Track live weather, Indian Air Quality Index, and 7-day forecasts.</p>
+
+    {% if not object %}
+        <div class="mt-3">
+            <label class="form-label" style="font-size: 0.85rem;">Popular Indian Cities (Click to auto-fill):</label>
+            <div class="city-chips-container">
+                <button type="button" class="city-chip" onclick="quickFill('Hyderabad, India', 'Hyderabad')">📍 Hyderabad</button>
+                <button type="button" class="city-chip" onclick="quickFill('Mumbai, India', 'Mumbai')">📍 Mumbai</button>
+                <button type="button" class="city-chip" onclick="quickFill('New Delhi, India', 'Delhi NCR')">📍 Delhi NCR</button>
+                <button type="button" class="city-chip" onclick="quickFill('Bengaluru, India', 'Bengaluru')">📍 Bengaluru</button>
+                <button type="button" class="city-chip" onclick="quickFill('Chennai, India', 'Chennai')">📍 Chennai</button>
+                <button type="button" class="city-chip" onclick="quickFill('Kolkata, India', 'Kolkata')">📍 Kolkata</button>
+                <button type="button" class="city-chip" onclick="quickFill('Pune, India', 'Pune')">📍 Pune</button>
+                <button type="button" class="city-chip" onclick="quickFill('Jaipur, India', 'Jaipur')">📍 Jaipur</button>
+                <button type="button" class="city-chip" onclick="quickFill('Ahmedabad, India', 'Ahmedabad')">📍 Ahmedabad</button>
+                <button type="button" class="city-chip" onclick="quickFill('Visakhapatnam, India', 'Vizag')">📍 Vizag</button>
+            </div>
+        </div>
+    {% endif %}
+
+    <form method="post" class="mt-3">
         {% csrf_token %}
         {% for field in form %}
             <div class="form-group">
@@ -13,7 +33,7 @@
                     <small class="text-muted">{{ field.help_text }}</small>
                 {% endif %}
                 {% for error in field.errors %}
-                    <div class="text-danger mt-1">{{ error }}</div>
+                    <div class="alert alert-error mt-1" style="padding: 0.5rem 0.75rem;">{{ error }}</div>
                 {% endfor %}
             </div>
         {% endfor %}
@@ -23,12 +43,21 @@
         </div>
     </form>
 </div>
+
 <script>
-    // Add form-control class to all inputs
+    // Auto-apply form styling
     document.querySelectorAll('input').forEach(input => {
         if(input.type !== 'hidden') {
             input.classList.add('form-control');
         }
     });
+
+    function quickFill(cityName, nickname) {
+        const cityInput = document.querySelector('input[name="city_name"]');
+        const nickInput = document.querySelector('input[name="custom_nickname"]');
+        if (cityInput) cityInput.value = cityName;
+        if (nickInput) nickInput.value = nickname;
+        cityInput.focus();
+    }
 </script>
 {% endblock content %}
