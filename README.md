@@ -17,7 +17,23 @@ WeatherDash India provides a personalized, fast, and visually captivating experi
 * **Quick-Add City Chips**: 1-click quick-fill badges for popular Indian metropolitan cities.
 * **Premium Glassmorphic UI & Animations**: Ambient weather particles, glowing hover cards with light-sheen reflections, live pulsating status radar dots (`🟢 Live`), and smooth cascading entry animations built with pure Vanilla CSS.
 
-![Add Location Preview](docs/add_location.png)
+---
+
+## 📸 Screenshots & Previews
+
+### 1. Live Weather Dashboard
+Horizontal glassmorphic card layout showcasing real-time temperatures, condition icons, live indicators, AQI, and UV levels:
+![Dashboard Overview](docs/dashboard.png)
+
+### 2. Location Detail & 7-Day / 24-Hour Forecasting
+Detailed view featuring the Solar Arc tracker, NAQI air quality breakdown (PM2.5, PM10, O₃), 24-hour hourly slider, and 7-day weather forecast:
+![Location Detail and Forecast](docs/location_detail.png)
+
+### 3. Add Location with Indian City Chips
+Quick-add interface equipped with 1-click popular Indian city chips (Hyderabad, Mumbai, Delhi NCR, Bengaluru, Chennai, Kolkata, Pune, Jaipur, Ahmedabad, Vizag):
+![Add Location Page](docs/add_location.png)
+
+---
 
 ## Demo Credentials
 To test the application quickly without registering, use the default administrator account:
